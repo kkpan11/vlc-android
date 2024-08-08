@@ -62,6 +62,7 @@ import org.videolan.resources.KEY_MEDIA_LAST_PLAYLIST_RESUME
 import org.videolan.resources.ROOM_DATABASE
 import org.videolan.resources.SCHEME_PACKAGE
 import org.videolan.resources.VLCInstance
+import org.videolan.television.ui.dialogs.ConfirmationTvActivity
 import org.videolan.tools.BitmapCache
 import org.videolan.tools.DAV1D_THREAD_NUMBER
 import org.videolan.tools.Settings
@@ -311,14 +312,15 @@ class PreferencesAdvanced : BasePreferenceFragment(), SharedPreferences.OnShared
         if (requestCode == FILE_PICKER_RESULT_CODE) {
             if (data.hasExtra(EXTRA_MRL)) {
                 launch {
-                    launch {
-                        PreferenceParser.restoreSettings(activity, Uri.parse(data.getStringExtra(
-                            EXTRA_MRL
-                        )))
-                    }
-                    VLCInstance.restart()
+                    PreferenceParser.restoreSettings(
+                        activity, Uri.parse(
+                            data.getStringExtra(
+                                EXTRA_MRL
+                            )
+                        )
+                    )
                 }
-                UiTools.restartDialog(activity!!, true)
+                UiTools.restartDialog(activity!!, true, RESTART_CODE, this)
             }
         }
     }
